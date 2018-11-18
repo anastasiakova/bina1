@@ -1,7 +1,11 @@
+import java.util.Comparator;
+import java.util.PriorityQueue;
+import java.util.Queue;
 
 public class UniformCostSearch   extends ASearch
 {
-	// Define lists here ...
+	Queue<ASearchNode> open;
+	Queue<ASearchNode> closed;
 	
 	@Override
 	public String getSolverName() 
@@ -22,7 +26,18 @@ public class UniformCostSearch   extends ASearch
 	@Override
 	public void initLists() 
 	{
-
+		open = new PriorityQueue<ASearchNode>(new Comparator<ASearchNode>(){
+			@Override
+			public int compare(ASearchNode o1, ASearchNode o2) {
+				return Double.compare(o1.getG(), o2.getG()) ;
+			}
+		});
+		closed = new PriorityQueue<ASearchNode>(new Comparator<ASearchNode>(){
+			@Override
+			public int compare(ASearchNode o1, ASearchNode o2) {
+				return Double.compare(o1.getG(), o2.getG()) ;
+			}
+		});
 	}
 
 	@Override
@@ -31,6 +46,9 @@ public class UniformCostSearch   extends ASearch
 		ASearchNode node
 	) 
 	{
+		if(isOpen(node)) {
+			return node;
+		}
 		return null;
 	}
 
@@ -40,6 +58,9 @@ public class UniformCostSearch   extends ASearch
 		ASearchNode node
 	) 
 	{
+		if(open != null) {
+			return open.contains(node);
+		}
 		return false;
 	}
 	
@@ -49,6 +70,9 @@ public class UniformCostSearch   extends ASearch
 		ASearchNode node
 	) 
 	{
+		if(closed != null) {
+			return closed.contains(node);
+		}
 		return false;
 	}
 
@@ -58,7 +82,7 @@ public class UniformCostSearch   extends ASearch
 		ASearchNode node
 	) 
 	{
-
+		open.add(node);
 	}
 
 	@Override
@@ -67,18 +91,24 @@ public class UniformCostSearch   extends ASearch
 		ASearchNode node
 	) 
 	{
-
+		closed.add(node);
 	}
 
 	@Override
 	public int openSize() 
 	{
+		if(open != null) {
+			return open.size();
+		}
 		return 0;
 	}
 
 	@Override
 	public ASearchNode getBest() 
 	{
+		if(open != null) {
+			return open.remove();
+		}
 		return null;
 	}
 

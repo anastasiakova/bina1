@@ -13,8 +13,8 @@
 			for (int y = 0 ; y < currentStatus.length ; y++) {
 				for (int x = 0 ; x < currentStatus.length ; x++) {
 					if (currentStatus[y][x] != 0) {
-						manhattanDistance += Math.abs((currentStatus[y][x] - 1)/currentStatus[0].length - y);
-						manhattanDistance += Math.abs((currentStatus[y][x] - 1)%currentStatus.length - x);
+						manhattanDistance += currentStatus[y][x] * Math.abs((currentStatus[y][x] - 1)/currentStatus[0].length - y);
+						manhattanDistance += currentStatus[y][x] * Math.abs((currentStatus[y][x] - 1)%currentStatus.length - x);
 					}
 				}
 			}
